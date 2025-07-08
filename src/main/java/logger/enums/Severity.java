@@ -2,9 +2,10 @@ package logger.enums;
 
 public enum Severity {
 
+    LOW("low"),
     HIGH("high"),
-    WARN("warn"),
-    LOW("low");
+    WARN("warn");
+
 
     public String getName() {
         return name;

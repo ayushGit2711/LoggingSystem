@@ -2,8 +2,6 @@ package logger;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import logger.pojo.Log;
-import logger.service.Logger;
 import org.junit.jupiter.api.Test;
 
 /**
