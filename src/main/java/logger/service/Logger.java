@@ -21,7 +21,7 @@ public class Logger {
 
     private Queue<Set<Log>> logsProcessingQueue = new LinkedList<Set<Log>>(); // capacity
 
-    private Integer timeout;
+    private Integer timeout = 1000;  // if time taken is greater than 12 ms, we will just delete some logs from our file.
 
     private static Logger logger = null;
 
@@ -67,19 +67,13 @@ public class Logger {
                 Set<Log> tempLog = DeepCopyUtil.deepCopy(this.logTrackSet);
                 this.put(this.logsProcessingQueue,tempLog);
                 this.flushLogTrackSet();
-                service.submit(()->{
-                    //perform IO operation
-                    try{
+                service.submit(() -> {
+                    try {
                         this.datastore.appendLog(this.logsProcessingQueue.peek());
                         this.flushLogProcessingQueue();
+                        long end = System.currentTimeMillis();
                     } catch(Exception ex) {
                         // handle exception
-                    }
-                    finally{
-                        long end = System.currentTimeMillis();
-                        if (timeout != null && (end - start) > timeout) {
-                            this.datastore.deleteLog();
-                        }
                     }
                 });
             }

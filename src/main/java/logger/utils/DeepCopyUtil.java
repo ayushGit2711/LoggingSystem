@@ -15,6 +15,7 @@ public class DeepCopyUtil {
         ) {
             // Serialize object into byte stream
             out.writeObject(original);
+            out.close();
 
             try (
                     ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
